@@ -15,7 +15,7 @@ app.use(cors(corsOptions)); // Aplicar as opções CORS
 app.use(express.json()); // Middleware para parsing de JSON
 
 app.post("/buscar-perfil", async (req, res) => {
-  const username ="deivison_santtosg";
+  const username = req.body.username;
   try {
     console.log(`Iniciando a captura do perfil ${username}`);
     const browser = await puppeteer.launch();
