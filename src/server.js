@@ -18,7 +18,7 @@ app.post("/buscar-perfil", async (req, res) => {
   const username = req.body.username;
   try {
     console.log(`Iniciando a captura do perfil ${username}`);
-    const browser = await puppeteer.launch({headless});
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(`https://www.instagram.com/${username}/`);
     await page.setViewport({ width: 375, height: 812 });
