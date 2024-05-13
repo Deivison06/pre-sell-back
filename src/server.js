@@ -6,13 +6,13 @@ const app = express();
 const port = 3000;
 let capturedImage = null;
 const corsOptions = {
-  origin: "https://pre.instapower.app.br/", // Permitir apenas solicitações deste domínio
-  methods: ["GET", "POST"], // Permitir apenas métodos GET e POST
+  origin: "*",
+  methods: ["GET", "POST"],
 };
 
-app.use(cors(corsOptions)); // Aplicar as opções CORS
+app.use(cors(corsOptions));
 
-app.use(express.json()); // Middleware para parsing de JSON
+app.use(express.json());
 
 app.post("/buscar-perfil", async (req, res) => {
   const username = req.body.username;
