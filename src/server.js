@@ -21,6 +21,7 @@ app.post("/buscar-perfil", async (req, res) => {
   try {
     console.log(`Iniciando a captura do perfil ${username}`);
     const browser = await puppeteer.launch({
+      headless: false,
       args: ['--no-sandbox'],
     });
     const page = await browser.newPage();
