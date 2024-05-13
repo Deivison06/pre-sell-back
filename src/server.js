@@ -11,17 +11,31 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.json());
 
 app.post("/buscar-perfil", async (req, res) => {
   const username = req.body.username;
+  const user = 'deivison_santtosg';
+  const password = 'Senha@123';
+  
   try {
     console.log(`Iniciando a captura do perfil ${username}`);
     const browser = await puppeteer.launch({
+      headless: false,
       args: ['--no-sandbox'],
     });
     const page = await browser.newPage();
+    
+    // Navigate to Instagram and login
+    await page.goto('https://www.instagram.com/accounts/login/', { waitUntil: 'networkidle2' });
+    console.log(`Iniciando login ${username}`);
+    await page.waitForSelector('input[name="username"]');
+    await page.type('input[name="username"]', user);
+    await page.type('input[name="password"]', password);
+    await page.click('button[type="submit"]');
+    console.log(`login feito ${username}`);
+    await page.waitForNavigation({ waitUntil: 'networkidle2' });
+    await delay(7000);
     await page.goto(`https://www.instagram.com/${username}/`);
     await page.setViewport({ width: 375, height: 812 });
     console.log("Aguardando 3 segundos para carregamento completo da página...");
