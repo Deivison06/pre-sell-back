@@ -21,6 +21,7 @@ app.post("/buscar-perfil", async (req, res) => {
   try {
     console.log(`Iniciando a captura do perfil ${username}`);
     const browser = await puppeteer.launch({
+      headless: false,
       args: ['--no-sandbox'],
     });
     const page = await browser.newPage();
@@ -40,7 +41,7 @@ app.post("/buscar-perfil", async (req, res) => {
     await delay(6000);
 
     // Primeiro clique (substitua o seletor com o correto)
-    await page.click('div:nth-child(2) > div >div>div>div>div>div>div>div>div>div:nth-child(2) > div:nth-child(2) a');
+    await page.click('span > div > a[href="#"]');
 
     // Aguardar um segundo após o primeiro clique antes de fazer a pesquisa
     await delay(2000);
