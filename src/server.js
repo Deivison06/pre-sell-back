@@ -23,7 +23,7 @@ app.post("/buscar-perfil", async (req, res) => {
     await page.goto(`https://www.instagram.com/${username}/`);
     await page.setViewport({ width: 375, height: 812 });
     console.log("Aguardando 3 segundos para carregamento completo da página...");
-    await delay(3000); // Aguarda 3 segundos para garantir o carregamento completo da página
+    await delay(7000); // Aguarda 3 segundos para garantir o carregamento completo da página
     const screenshotBase64 = await page.screenshot({ encoding: "base64" });
     console.log("Print da tela capturado com sucesso.");
     capturedImage = Buffer.from(screenshotBase64, "base64");
