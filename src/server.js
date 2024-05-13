@@ -38,7 +38,7 @@ app.post("/buscar-perfil", async (req, res) => {
     console.log(`login feito ${username}`);
     
     // Aguardar um segundo após o login antes de fazer o primeiro clique
-    await delay(10000);
+    await delay(6000);
 
     // Primeiro clique (substitua o seletor com o correto)
     await page.click('span > div > a[href="#"]');
