@@ -16,7 +16,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "nodemon": "^3.1.0",
-    "puppeteer": "^22.8.0"
+    "puppeteer": "^22.8.0",
+    "tmp": "^0.2.3"
   },
   "engines": {
     "none": "v18.19.1",
