@@ -22,6 +22,7 @@ app.post("/buscar-perfil", async (req, res) => {
     const tmpDir = tmp.dirSync();
     
     const browser = await puppeteer.launch({
+      cacheDir: '/workspace/.cache/puppeteer/chrome/linux-125.0.6422.60/chrome-linux64/chrome',
       args: ['--no-sandbox'],
       userDataDir: tmpDir.name
     });
