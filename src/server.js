@@ -5,8 +5,8 @@ const cors = require("cors");
 const tmp = require("tmp");
 const fs = require("fs");
 const app = express();
-const port = 3000;
-const capturedImages = {}; // Armazena imagens capturadas por username
+const port = process.env.PORT_APP;
+const capturedImages = {};
 const corsOptions = {
   origin: "*",
   methods: ["GET", "POST"],
@@ -19,7 +19,6 @@ app.post("/buscar-perfil", async (req, res) => {
   const username = req.body.username;
   try {
     console.log(`Iniciando a captura do perfil ${username}`);
-    // Crie um diretório temporário
     const tmpDir = tmp.dirSync();
     
     const browser = await puppeteer.launch({
@@ -31,15 +30,11 @@ app.post("/buscar-perfil", async (req, res) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.999 Safari/537.36');
     await page.goto(`https://www.instagram.com/${username}/`);
     await page.setViewport({ width: 375, height: 812 });
-    console.log("Aguardando 3 segundos para carregamento completo da página...");
-    await delay(7000); // Aguarda 3 segundos para garantir o carregamento completo da página
+    await delay(4000);
     const screenshotBase64 = await page.screenshot({ encoding: "base64" });
-    console.log("Print da tela capturado com sucesso.");
     capturedImages[username] = Buffer.from(screenshotBase64, "base64");
     await browser.close();
     console.log(`Captura do perfil ${username} concluída.`);
-    
-    // Limpa o diretório temporário
     fs.rm(tmpDir.name, { recursive: true, force: true }, (err) => {
       if (err) {
         console.error("Erro ao remover diretório temporário:", err);
@@ -70,7 +65,7 @@ app.get("/obter-imagem", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
+  console.log('Running server');
 });
 
 function delay(ms) {
