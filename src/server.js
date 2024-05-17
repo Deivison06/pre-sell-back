@@ -22,7 +22,6 @@ app.post("/buscar-perfil", async (req, res) => {
     const tmpDir = tmp.dirSync();
 
     const browser = await puppeteer.launch({
-      headless: false,
       args: ["--no-sandbox", "--start-fullscreen"],
       userDataDir: tmpDir.name,
     });
