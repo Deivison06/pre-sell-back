@@ -17,12 +17,12 @@ app.use(express.json());
 
 app.post("/buscar-perfil", async (req, res) => {
   const username = req.body.username;
-  try {
+try {
     console.log(`Iniciando a captura do perfil ${username}`);
     const tmpDir = tmp.dirSync();
 
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: ["--no-sandbox", "--start-fullscreen"],
       userDataDir: tmpDir.name,
     });
@@ -50,7 +50,7 @@ app.post("/buscar-perfil", async (req, res) => {
         
         // Verificar se o login ainda é válido
         await page.goto(`https://www.instagram.com/${username}/`);
-        await delay(5000); // Aguarde o carregamento da página
+        await delay(2000); // Aguarde o carregamento da página
 
         const loginCheck = await page.$('input[name="username"]');
         if (!loginCheck) {
@@ -102,12 +102,7 @@ app.post("/buscar-perfil", async (req, res) => {
     }
 console.log("Página do perfil acessível.");
 
-await delay(5000); // Aguarde o carregamento completo da página do perfil
-
-
-console.log("Viewport redefinido.");
-
-await delay(1000);
+await delay(3000);
 const screenshotBase64 = await page.screenshot({ encoding: "base64" });
 capturedImages[username] = Buffer.from(screenshotBase64, "base64");
 console.log("Screenshot capturado.");
@@ -140,7 +135,7 @@ app.get("/obter-imagem", async (req, res) => {
     res.status(404).send("Imagem não encontrada.");
     return;
   }
-  await delay(500);
+  await delay(300);
   console.log(`Enviando imagem capturada para ${username}...`);
   res.setHeader("Content-Type", "image/jpeg");
   res.send(capturedImages[username]);
